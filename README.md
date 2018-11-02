@@ -20,7 +20,9 @@ suspend fun <T> offload(block: suspend CoroutineScope.() -> T) = withContext(Dis
 
 ## Kotlin stdlib
 ```kotlin
-public inline fun <T> Collection<T>.randomOrNull(): T? {
+inline fun <T: Any> Collection<Result<T>>.partitionByResult() = mapNotNull { it.getOrNull() } to mapNotNull { it.exceptionOrNull() }
+
+inline fun <T> Collection<T>.randomOrNull(): T? {
     return takeIf { it.isNotEmpty() }?.random()
 }
 ```
